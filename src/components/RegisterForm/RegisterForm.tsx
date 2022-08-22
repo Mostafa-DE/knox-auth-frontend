@@ -21,7 +21,7 @@ const RegisterForm = () => {
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        const res = await fetch('http://localhost:8000/api/auth/register/', {
+        const res = await fetch('https://djangodemoauth.herokuapp.com/api/auth/register/', {
             method: 'POST',
             credentials: 'include',
             headers: {

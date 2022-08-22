@@ -13,7 +13,7 @@ interface User {
 function Home() {
     const [user, setUser] = useState<User>();
     const fetchUser = async () => {
-        const res = await fetch('http://localhost:8000/api/auth/user/', {
+        const res = await fetch('https://djangodemoauth.herokuapp.com/api/auth/user/', {
             method: 'GET',
             credentials: 'include',
             headers: {
