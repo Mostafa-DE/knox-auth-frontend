@@ -4,15 +4,13 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import {Link} from "react-router-dom"
 import {useNavigate} from "react-router-dom";
 
 export default function Header({user}: any): JSX.Element {
     const navigate = useNavigate()
     const handleLogout = async () => {
-        const res = await fetch('http://localhost:8000/api/auth/logout/', {
+        const res = await fetch('https://djangodemoauth.herokuapp.com/api/auth/logout/', {
             method: 'POST',
             credentials: 'include',
             headers: {
