@@ -1,4 +1,14 @@
-import {Avatar, Button, Checkbox, Container, CssBaseline, FormControlLabel, TextField} from "@mui/material"
+import {
+    Alert,
+    Avatar,
+    Button,
+    Checkbox,
+    Container,
+    CssBaseline,
+    FormControlLabel,
+    Snackbar,
+    TextField
+} from "@mui/material"
 import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 
@@ -13,6 +23,9 @@ const RegisterForm = () => {
         lastName: '',
         password: '',
     })
+
+    const [openAlert, setOpenAlert] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (event: any) => {
         const {name, value} = event.target;
@@ -35,11 +48,28 @@ const RegisterForm = () => {
                 last_name: values.lastName,
             })
         })
-        if (res.ok) navigate('/login')
+        const data = await res.json();
+        if (!res.ok) {
+            data.email && setErrorMessage(data.email[0]);
+            data.username && setErrorMessage(data.username[0]);
+            setOpenAlert(true);
+            return;
+        }
+        navigate('/login')
+    }
+
+    const handleCloseAlert = () => {
+        setOpenAlert(false);
     }
 
     return (
         <Container component="main" maxWidth="xs">
+            <Snackbar anchorOrigin={{vertical: "top", horizontal: "center"}} open={openAlert} autoHideDuration={6000}
+                      onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity="error" sx={{width: '100%'}}>
+                    Sorry, {errorMessage} Please try again
+                </Alert>
+            </Snackbar>
             <CssBaseline/>
             <div style={{
                 margin: "4rem 0 0 0",
@@ -103,11 +133,6 @@ const RegisterForm = () => {
                         id="password"
                         sx={{"margin": "0 0 1rem 0"}}
                     />
-                    <FormControlLabel
-                        control={<Checkbox required value="allowExtraEmails" color="primary"/>}
-                        label="I want to receive inspiration, marketing promotions and updates via email."
-                        sx={{"margin": "0 0 1rem 0"}}
-                    />
                     <Button
                         type="submit"
                         fullWidth
@@ -125,6 +150,17 @@ const RegisterForm = () => {
                     >
                         <Link to='/login'>
                             Go to login page
+                        </Link>
+                    </Button>
+                    <Button
+                        type="button"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        sx={{margin: "1rem 0 0 0"}}
+                    >
+                        <Link to='/'>
+                            Go to home page
                         </Link>
                     </Button>
                 </form>

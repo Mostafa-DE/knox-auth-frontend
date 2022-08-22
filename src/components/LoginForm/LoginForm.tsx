@@ -1,4 +1,4 @@
-import {Avatar, Button, Container, CssBaseline, TextField} from "@mui/material"
+import {Alert, Avatar, Button, Container, CssBaseline, Snackbar, TextField} from "@mui/material"
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
@@ -10,6 +10,8 @@ const LoginForm = () => {
         username: '',
         password: '',
     })
+
+    const [openAlert, setOpenAlert] = useState(false);
 
     const handleChange = (event: any) => {
         const {name, value} = event.target;
@@ -29,12 +31,26 @@ const LoginForm = () => {
                 password: values.password
             })
         })
-        if (res.ok) navigate('/')
+        if (!res.ok) {
+            setOpenAlert(true);
+            return;
+        }
+        navigate('/')
+    }
+
+    const handleCloseAlert = () => {
+        setOpenAlert(false);
     }
 
 
     return (
         <Container component="main" maxWidth="xs">
+            <Snackbar anchorOrigin={{vertical: "top", horizontal: "center"}} open={openAlert} autoHideDuration={6000}
+                      onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity="error" sx={{width: '100%'}}>
+                    Sorry, Invalid username or password Please try again.
+                </Alert>
+            </Snackbar>
             <CssBaseline/>
             <div style={{
                 margin: "4rem 0 0 0",
@@ -83,6 +99,17 @@ const LoginForm = () => {
                     >
                         <Link to='/register'>
                             Go to register page
+                        </Link>
+                    </Button>
+                    <Button
+                        type="button"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        sx={{margin: "1rem 0 0 0"}}
+                    >
+                        <Link to='/'>
+                            Go to home page
                         </Link>
                     </Button>
                 </form>

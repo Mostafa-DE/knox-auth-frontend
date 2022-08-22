@@ -26,9 +26,7 @@ function Home() {
     }
 
     useEffect(() => {
-        fetchUser().then(() => {
-            console.log('done');
-        })
+        fetchUser();
     }, [])
 
 
@@ -36,13 +34,17 @@ function Home() {
         <>
             <Header user={user}/>
             <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
-                <h1>Welcome in Home Page</h1>
-                <h3>{!user && 'You are not logged in, login now to see your info...'}</h3>
+                <h1>Welcome in Auth-Demo</h1>
+                <p>
+                    This demo auth made via Django {"{drf, Knox}"}, feel free to clone this project and add your custom
+                    authentication
+                </p>
+                <h2>{!user && 'You are not logged in yet, login now to see your info...'}</h2>
 
                 {user && (
                     <>
                         <h2>Your Details:-</h2>
-                        <ul>
+                        <ul style={{listStyle: "none", fontSize: "1.5rem"}}>
                             <li><b>User Name:</b> {user.username}</li>
                             <li><b>Email Address:</b> {user.email}</li>
                             <li><b>Account Status:</b> {user.is_active && 'Active'}</li>
@@ -50,6 +52,10 @@ function Home() {
                         </ul>
                     </>
                 )}
+
+                <h3 style={{margin: "8rem 0 0 0", backgroundColor: "#333", color: "#fafafa", padding: "1rem"}}>
+                    Please note that this app is for demo purposes, please don't register with sensitive info :)
+                </h3>
             </div>
         </>
     )
