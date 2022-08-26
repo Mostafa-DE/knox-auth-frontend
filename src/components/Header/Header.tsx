@@ -28,7 +28,16 @@ export default function Header({user}: any): JSX.Element {
                         Auth-Demo
                     </Typography>
                     {!user && (
-                        <Box>
+                        <Box style={{display: "flex", alignItems: "center"}}>
+                            <a href="https://github.com/Mostafa-DE/simple-auth-django-react" target="_blank">
+                                <img
+                                    src="./public/github.svg"
+                                    alt="github img"
+                                    width={30}
+                                    height={30}
+                                    style={{margin: "0 1rem 0 0"}}
+                                />
+                            </a>
                             <Button color="inherit"><Link to='/register'>Register</Link></Button>
                             <Button color="inherit"><Link to='/login'>Login</Link></Button>
                         </Box>
