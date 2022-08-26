@@ -27,17 +27,17 @@ export default function Header({user}: any): JSX.Element {
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         Auth-Demo
                     </Typography>
+                    <a href="https://github.com/Mostafa-DE/simple-auth-django-react" target="_blank">
+                        <img
+                            src="/github.svg"
+                            alt="github img"
+                            width={30}
+                            height={30}
+                            style={{margin: "0 1rem 0 0"}}
+                        />
+                    </a>
                     {!user && (
-                        <Box style={{display: "flex", alignItems: "center"}}>
-                            <a href="https://github.com/Mostafa-DE/simple-auth-django-react" target="_blank">
-                                <img
-                                    src="./public/github.svg"
-                                    alt="github img"
-                                    width={30}
-                                    height={30}
-                                    style={{margin: "0 1rem 0 0"}}
-                                />
-                            </a>
+                        <Box>
                             <Button color="inherit"><Link to='/register'>Register</Link></Button>
                             <Button color="inherit"><Link to='/login'>Login</Link></Button>
                         </Box>
