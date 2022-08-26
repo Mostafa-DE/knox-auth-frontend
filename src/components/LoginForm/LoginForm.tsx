@@ -1,6 +1,16 @@
-import {Alert, Avatar, Button, Container, CssBaseline, Snackbar, TextField} from "@mui/material"
+import {
+    Alert,
+    Avatar,
+    Box,
+    Button,
+    Container,
+    CssBaseline,
+    Snackbar,
+    TextField
+} from "@mui/material"
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import BackdropLoading from "../BackdropLoading";
 
 
 const LoginForm = () => {
@@ -12,6 +22,7 @@ const LoginForm = () => {
     })
 
     const [openAlert, setOpenAlert] = useState(false);
+    const [openBackdrop, setOpenBackdrop] = useState(false);
 
     const handleChange = (event: any) => {
         const {name, value} = event.target;
@@ -20,6 +31,7 @@ const LoginForm = () => {
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
+        setOpenBackdrop(true);
         const res = await fetch('https://djangodemoauth.herokuapp.com/api/auth/login/', {
             method: 'POST',
             credentials: 'include',
@@ -33,6 +45,7 @@ const LoginForm = () => {
         })
         if (!res.ok) {
             setOpenAlert(true);
+            setOpenBackdrop(false);
             return;
         }
         navigate('/')
@@ -42,9 +55,9 @@ const LoginForm = () => {
         setOpenAlert(false);
     }
 
-
     return (
         <Container component="main" maxWidth="xs">
+            <BackdropLoading openBackdrop={openBackdrop}/>
             <Snackbar anchorOrigin={{vertical: "top", horizontal: "center"}} open={openAlert} autoHideDuration={6000}
                       onClose={handleCloseAlert}>
                 <Alert onClose={handleCloseAlert} severity="error" sx={{width: '100%'}}>
@@ -52,7 +65,7 @@ const LoginForm = () => {
                 </Alert>
             </Snackbar>
             <CssBaseline/>
-            <div style={{
+            <Box style={{
                 margin: "4rem 0 0 0",
                 display: "flex",
                 justifyContent: "center",
@@ -113,7 +126,7 @@ const LoginForm = () => {
                         </Link>
                     </Button>
                 </form>
-            </div>
+            </Box>
         </Container>
     )
 }

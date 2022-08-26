@@ -2,15 +2,14 @@ import {
     Alert,
     Avatar,
     Button,
-    Checkbox,
     Container,
     CssBaseline,
-    FormControlLabel,
     Snackbar,
     TextField
 } from "@mui/material"
 import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
+import BackdropLoading from "../BackdropLoading";
 
 
 const RegisterForm = () => {
@@ -26,6 +25,7 @@ const RegisterForm = () => {
 
     const [openAlert, setOpenAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [openBackdrop, setOpenBackdrop] = useState(false);
 
     const handleChange = (event: any) => {
         const {name, value} = event.target;
@@ -34,6 +34,7 @@ const RegisterForm = () => {
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
+        setOpenBackdrop(true);
         const res = await fetch('https://djangodemoauth.herokuapp.com/api/auth/register/', {
             method: 'POST',
             credentials: 'include',
@@ -52,6 +53,7 @@ const RegisterForm = () => {
         if (!res.ok) {
             data.email && setErrorMessage(data.email[0]);
             data.username && setErrorMessage(data.username[0]);
+            setOpenBackdrop(false);
             setOpenAlert(true);
             return;
         }
@@ -64,6 +66,7 @@ const RegisterForm = () => {
 
     return (
         <Container component="main" maxWidth="xs">
+            <BackdropLoading openBackdrop={openBackdrop}/>
             <Snackbar anchorOrigin={{vertical: "top", horizontal: "center"}} open={openAlert} autoHideDuration={6000}
                       onClose={handleCloseAlert}>
                 <Alert onClose={handleCloseAlert} severity="error" sx={{width: '100%'}}>
